@@ -91,7 +91,10 @@ class _HomePageState extends State<HomePage> {
                               delegate: _SliverAppBarDelegate(
                                 minHeight: 150,
                                 maxHeight: 150,
-                                child: getCategoriesWidget(context),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 40),
+                                  child: getCategoriesWidget(context),
+                                ),
                               ),
                             ),
                           ];
@@ -345,24 +348,19 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[Text("No se encontraron categorías")],
         );
       } else {
-        return Padding(
-          padding: const EdgeInsets.only(
-            left: 12,
-          ),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            controller: _categoryScrollController,
-            child: Row(
-              children: List.generate(value.categories.length, (index) {
-                return CategoryCard(
-                  category: value.categories[index],
-                  categorySelected: value.selectedCategory == null
-                      ? null
-                      : value.selectedCategory,
-                  index: index,
-                );
-              }),
-            ),
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          controller: _categoryScrollController,
+          child: Row(
+            children: List.generate(value.categories.length, (index) {
+              return CategoryCard(
+                category: value.categories[index],
+                categorySelected: value.selectedCategory == null
+                    ? null
+                    : value.selectedCategory,
+                index: index,
+              );
+            }),
           ),
         );
       }

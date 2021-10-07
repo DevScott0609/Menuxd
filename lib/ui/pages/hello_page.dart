@@ -152,61 +152,61 @@ class _HelloPageState extends State<HelloPage> {
               ),
             ),
           ),
-          Align(
-              alignment: Alignment.topCenter,
-              child: Transform.translate(
-                offset: Offset(0, 27),
-                child: Image.asset(
-                  "assets/logo/logo2.png",
-                  height: 39.7,
-                ),
-              )),
-          Positioned(
-            top: 224,
-            left: 190,
-            child: Container(
-              height: 90,
-              width: 190,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(100),
-                      bottomLeft: Radius.circular(100),
-                      bottomRight: Radius.elliptical(240, 220))),
-              alignment: Alignment.center,
-              child: Text(
-                lang.w(Word.hello),
-                style: TextStyle(
-                  fontSize: 30,
-                  color: ColorPalette.gray,
-                  fontFamily: "SofiaProBold",
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 134,
-            right: 310,
-            child: Container(
-              height: 70,
-              width: 190,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(100),
-                      bottomLeft: Radius.circular(100),
-                      topRight: Radius.elliptical(240, 220))),
-              alignment: Alignment.center,
-              child: Text(
-                lang.w(Word.welcome),
-                style: TextStyle(
-                  fontSize: 20,
-                  color: ColorPalette.gray,
-                  fontFamily: "SofiaProBold",
-                ),
-              ),
-            ),
-          )
+          // Align(
+          //     alignment: Alignment.topCenter,
+          //     child: Transform.translate(
+          //       offset: Offset(0, 27),
+          //       child: Image.asset(
+          //         "assets/logo/logo2.png",
+          //         height: 39.7,
+          //       ),
+          //     )),
+          // Positioned(
+          //   top: 224,
+          //   left: 190,
+          //   child: Container(
+          //     height: 90,
+          //     width: 190,
+          //     decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         borderRadius: BorderRadius.only(
+          //             topLeft: Radius.circular(100),
+          //             bottomLeft: Radius.circular(100),
+          //             bottomRight: Radius.elliptical(240, 220))),
+          //     alignment: Alignment.center,
+          //     child: Text(
+          //       lang.w(Word.hello),
+          //       style: TextStyle(
+          //         fontSize: 30,
+          //         color: ColorPalette.gray,
+          //         fontFamily: "SofiaProBold",
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Positioned(
+          //   top: 134,
+          //   right: 310,
+          //   child: Container(
+          //     height: 70,
+          //     width: 190,
+          //     decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         borderRadius: BorderRadius.only(
+          //             topLeft: Radius.circular(100),
+          //             bottomLeft: Radius.circular(100),
+          //             topRight: Radius.elliptical(240, 220))),
+          //     alignment: Alignment.center,
+          //     child: Text(
+          //       lang.w(Word.welcome),
+          //       style: TextStyle(
+          //         fontSize: 20,
+          //         color: ColorPalette.gray,
+          //         fontFamily: "SofiaProBold",
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

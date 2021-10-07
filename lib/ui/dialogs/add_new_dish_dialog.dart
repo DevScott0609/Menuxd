@@ -561,7 +561,7 @@ class _AddNewDishDialogState extends State<AddNewDishDialog> {
                 ),
               ),
               CupertinoSwitch(
-                value: ingredient.active,
+                value: ingredient.price == 0 ? false : ingredient.active,
                 onChanged: (value) {
                   setState(() {
                     ingredient.active = value;
