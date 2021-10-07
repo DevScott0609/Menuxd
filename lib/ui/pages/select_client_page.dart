@@ -113,7 +113,7 @@ class _SelectClientPageState extends State<SelectClientPage> {
 
   @override
   void initState() {
-    Provider.of<HttpHandler>(widget.context)
+    Provider.of<HttpHandler>(widget.context, listen: false)
         .getRestaurantsClients()
         .then((list) {
       setState(() {

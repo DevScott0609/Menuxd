@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import '../../internacionalization/app_language.dart';
 import '../../models/category.dart';
 import '../../models/dish.dart';
@@ -30,7 +30,7 @@ class _DrinksDetailsDialogState extends State<DrinksDetailsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     final list = widget.category.dishesList;
     return MyDialog(
       opacity: 0.0,
@@ -177,7 +177,7 @@ class _DrinksDetailsDialogState extends State<DrinksDetailsDialog> {
 
   void addToOrden(Dish dish, BuildContext context) {
     if (dish != null) {
-      Provider.of<OrdersProvider>(context).addOrder(OrderItem(
+      Provider.of<OrdersProvider>(context, listen: false).addOrder(OrderItem(
         dish: dish,
         mount: 1,
         takeaway: false,
@@ -191,7 +191,7 @@ class _DrinksDetailsDialogState extends State<DrinksDetailsDialog> {
     Navigator.maybePop(context);
     Navigator.maybePop(context);
     Navigator.maybePop(context);
-    Provider.of<OrdersProvider>(context).orderNow();
+    Provider.of<OrdersProvider>(context, listen: false).orderNow();
     showMyDialog(context: context, child: SendOrderDialog());
   }
 
@@ -216,7 +216,8 @@ class DrinkDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final drinkSelected = (selected == dish);
-    final image = Provider.of<CategoryProvider>(context).imageOfDish(dish);
+    final image =
+        Provider.of<CategoryProvider>(context, listen: false).imageOfDish(dish);
     double added = drinkSelected ? -3 : 0;
     return GestureDetector(
       onTap: onSelect,
@@ -261,7 +262,7 @@ class DrinkDetailsWidget extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: image,
                     placeholder: (context, url) =>
-                                    Center(child: CupertinoActivityIndicator()),
+                        Center(child: CupertinoActivityIndicator()),
                     height: 114,
                     fit: BoxFit.cover,
                   ),
@@ -277,8 +278,7 @@ class DrinkDetailsWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                "Error Error, Error",
-                // "\t\tGs. ${(dish.price == null) ? "_ERROR_" : FlutterMoneyFormatter(amount: dish.price.toDouble(), settings: MoneyFormatterSettings(thousandSeparator: ".", decimalSeparator: ",")).output.withoutFractionDigits}",
+                "\t\tGs. ${(dish.price == null) ? "_ERROR_" : FlutterMoneyFormatter(amount: dish.price.toDouble(), settings: MoneyFormatterSettings(thousandSeparator: ".", decimalSeparator: ",")).output.withoutFractionDigits}",
                 style: TextStyle(
                     color: Color(0xfffa456f),
                     fontSize: 17,
@@ -312,7 +312,8 @@ class OthersDrinkWidget extends StatelessWidget {
       onTap: () {
         Navigator.pop(context);
         Navigator.pop(context);
-        Provider.of<CategoryProvider>(context).selectedCategory = category;
+        Provider.of<CategoryProvider>(context, listen: false).selectedCategory =
+            category;
       },
       child: Material(
         child: AnimatedContainer(

@@ -19,7 +19,7 @@ class _CallWaiterDialogState extends State<LogoutDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
 
     return MyDialog(
       width: 480,
@@ -47,7 +47,8 @@ class _CallWaiterDialogState extends State<LogoutDialog> {
                     fontSize: 30,
                     color: ColorPalette.gray),
               ),
-            ),SizedBox(
+            ),
+            SizedBox(
               height: 30,
             ),
             Container(
@@ -61,21 +62,22 @@ class _CallWaiterDialogState extends State<LogoutDialog> {
                 width: double.infinity,
                 height: 56,
                 child: FlatButton(
-
                   highlightColor: ColorPalette.melon,
                   color: Colors.white,
                   child: Text(
                     lang.w(Word.yes),
-                    style: TextStyle(fontFamily: "SofiaProBold", fontSize: 17, color: buttonColor),
+                    style: TextStyle(
+                        fontFamily: "SofiaProBold",
+                        fontSize: 17,
+                        color: buttonColor),
                   ),
                   onPressed: () {
-
-                    final preferences = Provider.of<Preferences>(context);
+                    final preferences =
+                        Provider.of<Preferences>(context, listen: false);
                     preferences.session = null;
 
                     Navigator.pushNamedAndRemoveUntil(
                         context, "/", ModalRoute.withName('/'));
-
                   },
                 ),
               ),
@@ -101,6 +103,7 @@ class _CallWaiterDialogState extends State<LogoutDialog> {
       ],
     );
   }
+
   @override
   void initState() {
     super.initState();

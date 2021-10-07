@@ -50,7 +50,7 @@ class TextLang extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     final child = Text(
       lang.w(word, edit: wordEdit),
       key: key,

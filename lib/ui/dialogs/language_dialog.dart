@@ -19,8 +19,9 @@ class _LanguageDialogState extends State<LanguageDialog> {
   @override
   void initState() {
     super.initState();
-    languageSelected =
-        Provider.of<AppLanguage>(widget.context).locale.languageCode;
+    languageSelected = Provider.of<AppLanguage>(widget.context, listen: false)
+        .locale
+        .languageCode;
   }
 
   @override
@@ -87,8 +88,8 @@ class _LanguageDialogState extends State<LanguageDialog> {
 
   void onSelect(BuildContext context, String value) {
     Navigator.maybePop(context);
-    Provider.of<AppLanguage>(context).locale = Locale(value);
-    Provider.of<Preferences>(context).language = value;
+    Provider.of<AppLanguage>(context, listen: false).locale = Locale(value);
+    Provider.of<Preferences>(context, listen: false).language = value;
   }
 }
 

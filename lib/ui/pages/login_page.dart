@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    final language = Provider.of<AppLanguage>(context);
+    final language = Provider.of<AppLanguage>(context, listen: false);
     return CupertinoTheme(
       data: CupertinoThemeData(
         textTheme: CupertinoTextThemeData(

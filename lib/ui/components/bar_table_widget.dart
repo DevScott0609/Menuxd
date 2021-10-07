@@ -14,7 +14,7 @@ class BarTableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     return GestureDetector(
       onTap: () {
         onTableSelected(this.table);

@@ -26,8 +26,9 @@ class _DrinksDialogState extends State<DrinksDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
-    final categoryProvider = Provider.of<CategoryProvider>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
     final categories = categoryProvider.suggestedCategory().where((category) {
       return category.dishesList?.isNotEmpty ?? false;
     }).toList();
@@ -127,7 +128,7 @@ class _DrinksDialogState extends State<DrinksDialog> {
 
   void payNow(BuildContext context) {
     Navigator.pop(context);
-    Provider.of<OrdersProvider>(context).orderNow();
+    Provider.of<OrdersProvider>(context, listen: false).orderNow();
     showMyDialog(context: context, child: SendOrderDialog());
   }
 

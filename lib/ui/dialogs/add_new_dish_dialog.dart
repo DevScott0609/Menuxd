@@ -47,7 +47,7 @@ class _AddNewDishDialogState extends State<AddNewDishDialog> {
   bool takeaway = false;
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     final child = editing ? editingWidget(lang) : firstWidget(lang);
     return MyDialog(
       width: 444,
@@ -480,7 +480,7 @@ class _AddNewDishDialogState extends State<AddNewDishDialog> {
   void addDishToOrder(BuildContext context, {bool orderNow = false}) {
     Navigator.pop(context);
     if (widget.editingDishInOrder) {
-      Provider.of<OrdersProvider>(context).updateOrder(
+      Provider.of<OrdersProvider>(context, listen: false).updateOrder(
           OrderItem(
             dish: editingDish,
             takeaway: takeaway,
@@ -488,7 +488,7 @@ class _AddNewDishDialogState extends State<AddNewDishDialog> {
           ),
           widget.index);
     } else {
-      Provider.of<OrdersProvider>(context).addOrder(OrderItem(
+      Provider.of<OrdersProvider>(context, listen: false).addOrder(OrderItem(
         dish: editingDish,
         mount: _mount,
         takeaway: takeaway,
@@ -496,10 +496,11 @@ class _AddNewDishDialogState extends State<AddNewDishDialog> {
     }
 
     if (orderNow) {
-      final categoryProvider = Provider.of<CategoryProvider>(context);
+      final categoryProvider =
+          Provider.of<CategoryProvider>(context, listen: false);
       final categories = categoryProvider.suggestedCategory();
       if (categories.length == 0) {
-        Provider.of<OrdersProvider>(context).orderNow();
+        Provider.of<OrdersProvider>(context, listen: false).orderNow();
         showMyDialog(context: context, child: SendOrderDialog());
       } else {
         showMyDialog(context: context, child: DrinksDialog());

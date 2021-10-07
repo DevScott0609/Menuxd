@@ -138,7 +138,8 @@ class _OrderElementPageState extends State<OrderElementPage> {
               GestureDetector(
                 onTap: () {
                   if (!widget.myOrder.locked) {
-                    Provider.of<OrdersProvider>(context).delete(widget.myOrder);
+                    Provider.of<OrdersProvider>(context, listen: false)
+                        .delete(widget.myOrder);
                   }
                 },
                 child: Column(

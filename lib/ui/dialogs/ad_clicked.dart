@@ -18,7 +18,7 @@ class AdClickDialog extends StatefulWidget {
 class _AdClickDialogState extends State<AdClickDialog> {
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
 
     return MyDialog(
       width: 480,

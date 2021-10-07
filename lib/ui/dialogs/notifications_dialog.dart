@@ -20,7 +20,8 @@ class _NotificationsDialogState extends State<NotificationsDialog> {
   @override
   @override
   Widget build(BuildContext context) {
-    final promotions = Provider.of<OrdersProvider>(context).notifications;
+    final promotions =
+        Provider.of<OrdersProvider>(context, listen: false).notifications;
     return Align(
       alignment: Alignment.topRight,
       child: Transform.translate(
@@ -102,8 +103,9 @@ class _NotificationsDialogState extends State<NotificationsDialog> {
   }
 
   Widget getList(BuildContext context) {
-    final promotions = Provider.of<OrdersProvider>(context).promotions;
-    HttpHandler httpHandler = Provider.of<HttpHandler>(context);
+    final promotions =
+        Provider.of<OrdersProvider>(context, listen: false).promotions;
+    HttpHandler httpHandler = Provider.of<HttpHandler>(context, listen: false);
     return ListView.builder(
         itemCount: promotions.length,
         itemBuilder: (context, index) {
@@ -114,8 +116,8 @@ class _NotificationsDialogState extends State<NotificationsDialog> {
             imagePath: promotion.picture,
             onPressed: () {
               Navigator.pop(context);
-              Provider.of<CategoryProvider>(context).promotionSelected =
-                  promotion;
+              Provider.of<CategoryProvider>(context, listen: false)
+                  .promotionSelected = promotion;
               httpHandler.sendPromotionClick(promotion);
             },
           );

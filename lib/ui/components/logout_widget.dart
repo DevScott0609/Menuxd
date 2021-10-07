@@ -11,8 +11,6 @@ import '../../utils/color_palette.dart';
 import '../../models/popup.dart';
 
 class LogoutWidget extends StatefulWidget {
-
-
   @override
   _CallWaiterWidgetState createState() => _CallWaiterWidgetState();
 }
@@ -20,28 +18,29 @@ class LogoutWidget extends StatefulWidget {
 class _CallWaiterWidgetState extends State<LogoutWidget> {
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
-    final tableProvider = Provider.of<OrdersProvider>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
+    final tableProvider = Provider.of<OrdersProvider>(context, listen: false);
 
     return GestureDetector(
       onTap: () {
-        if(!tableProvider.callingWaiter){
+        if (!tableProvider.callingWaiter) {
           callWaiter(context);
         }
-
       },
       child: Column(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 20),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: null,
-            ),
-            padding: EdgeInsets.all(15),
-            child: Icon(Icons.power_settings_new,   size: 30.0,
-              color: Colors.grey[800],)
-          ),
+              margin: EdgeInsets.only(top: 20),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: null,
+              ),
+              padding: EdgeInsets.all(15),
+              child: Icon(
+                Icons.power_settings_new,
+                size: 30.0,
+                color: Colors.grey[800],
+              )),
           Transform.translate(
               offset: Offset(0, 0),
               child: Text(
@@ -49,8 +48,9 @@ class _CallWaiterWidgetState extends State<LogoutWidget> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 13,
-                    color:Colors.grey,
-                    fontFamily: "SofiaPro", fontWeight: FontWeight.bold),
+                    color: Colors.grey,
+                    fontFamily: "SofiaPro",
+                    fontWeight: FontWeight.bold),
               ))
         ],
       ),

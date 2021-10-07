@@ -104,7 +104,7 @@ class DeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(

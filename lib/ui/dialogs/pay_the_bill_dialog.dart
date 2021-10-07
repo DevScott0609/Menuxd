@@ -19,7 +19,7 @@ class _PayTheBillDialogState extends State<PayTheBillDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
 
     return Center(
       child: GestureDetector(

@@ -27,7 +27,7 @@ class _RateYourExperienceDialogState extends State<RateYourExperienceDialog> {
   Question question;
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     return MyDialog(
       width: 500,
       height: 550,
@@ -151,13 +151,15 @@ class _RateYourExperienceDialogState extends State<RateYourExperienceDialog> {
                         color: buttonColor),
                   ),
                   onPressed: () {
-                    Provider.of<OrdersProvider>(context).rateExperience(Rate(
+                    Provider.of<OrdersProvider>(context, listen: false)
+                        .rateExperience(Rate(
                       score: rateValue,
                       questionId: question.id,
                     ));
                     Navigator.pop(context);
-                    final ratings =
-                        Provider.of<OrdersProvider>(widget.context).questions;
+                    final ratings = Provider.of<OrdersProvider>(widget.context,
+                            listen: false)
+                        .questions;
                     if ((ratings.length - 1) > widget.question) {
                       Future.delayed(Duration(seconds: 5)).then((value) {
                         showMyDialog(
@@ -208,7 +210,8 @@ class _RateYourExperienceDialogState extends State<RateYourExperienceDialog> {
   void initState() {
     super.initState();
 
-    final ratings = Provider.of<OrdersProvider>(widget.context).questions;
+    final ratings =
+        Provider.of<OrdersProvider>(widget.context, listen: false).questions;
     if (ratings != null) {
       question = ratings[widget.question];
     }

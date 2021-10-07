@@ -15,7 +15,7 @@ class _SendOrderDialogState extends State<SendOrderDialog> {
   Color colorButton = ColorPalette.gray;
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
 
     return Center(
       child: GestureDetector(
@@ -141,6 +141,5 @@ class _SendOrderDialogState extends State<SendOrderDialog> {
   @override
   void initState() {
     super.initState();
-
   }
 }

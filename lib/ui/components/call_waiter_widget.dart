@@ -18,7 +18,7 @@ class CallWaiterWidget extends StatefulWidget {
 class _CallWaiterWidgetState extends State<CallWaiterWidget> {
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     final tableProvider = Provider.of<OrdersProvider>(context, listen: false);
 
     return GestureDetector(

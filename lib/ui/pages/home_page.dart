@@ -423,7 +423,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget getPromotionsWidget(BuildContext context) {
-//    final lang = Provider.of<AppLanguage>(context);
+//    final lang = Provider.of<AppLanguage>(context, listen: false);
     List promotions =
         Provider.of<OrdersProvider>(context, listen: false).promotions;
     List ads = _adsList ?? [];
@@ -493,7 +493,7 @@ class _HomePageState extends State<HomePage> {
     categoryProvider.addListener(onCategoryChange);
     final tableProvider =
         Provider.of<OrdersProvider>(widget.context, listen: false);
-    //final preferences = Provider.of<Preferences>(widget.context);
+    //final preferences = Provider.of<Preferences>(widget.context, listen: false);
     if (tableProvider.table == null) {
       Future.delayed(Duration(milliseconds: 500)).then((value) {
         _tableChangePressed(widget.context);

@@ -16,7 +16,7 @@ class _AddedOrdersDialogState extends State<AddedOrdersDialog> {
   Color buttonColor = Colors.black;
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
 
     return MyDialog(
       width: 480,

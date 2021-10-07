@@ -52,7 +52,7 @@ class _OrdersWidgetState extends State<OrdersWidget> {
             child: Stack(
               children: <Widget>[
                 CircleAvatar(
-                  radius:30,
+                  radius: 30,
                   backgroundColor: Colors.grey[100],
                   child: Image.asset(
                     "assets/home_icons/orders.png",
@@ -70,9 +70,7 @@ class _OrdersWidgetState extends State<OrdersWidget> {
                       decoration: BoxDecoration(
                           color: Color(0xfffa456f),
                           shape: BoxShape.circle,
-                          boxShadow: [
-
-                          ]),
+                          boxShadow: []),
                       child: Text(
                         widget.orders.toString(),
                         style: TextStyle(
@@ -87,7 +85,7 @@ class _OrdersWidgetState extends State<OrdersWidget> {
             ),
           ),
           Text(
-            Provider.of<AppLanguage>(context).w(Word.orders),
+            Provider.of<AppLanguage>(context, listen: false).w(Word.orders),
             style: TextStyle(
                 //fontSize: 16,
                 color: (_pressed)
