@@ -20,7 +20,7 @@ class DishPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     loadDish(context);
     return ValueListenableBuilder<List>(
         valueListenable: dishList,
@@ -51,11 +51,11 @@ class DishPageWidget extends StatelessWidget {
           } else {
             return ListView(
               children: <Widget>[
-                // Wrap(
-                //   children: List.generate(value.length, (index) {
-                //     return DishWidget(value[index]);
-                //   }),
-                // ),
+                Wrap(
+                  children: List.generate(value.length, (index) {
+                    return DishWidget(value[index]);
+                  }),
+                ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: RichText(
@@ -84,21 +84,18 @@ class DishPageWidget extends StatelessWidget {
   void loadDish(BuildContext context) async {
     if (category.dishesList != null) {
       //Si ya se tiene cargado, simplemente se cancela la carga
-
       if (category.id == 560) {
-        List promotions = Provider.of<OrdersProvider>(context).promotions;
+        List promotions =
+            Provider.of<OrdersProvider>(context, listen: false).promotions;
         var newPromo = [];
-        promotions.forEach((fruit) => {
-          newPromo.add((fruit.dish))
-        });
+        promotions.forEach((fruit) => {newPromo.add((fruit.dish))});
         this.dishList.value = newPromo;
-      } 
-      else {
+      } else {
         this.dishList.value = category.dishesList;
       }
       return;
     }
-    HttpHandler httpHandler = Provider.of<HttpHandler>(context);
+    HttpHandler httpHandler = Provider.of<HttpHandler>(context, listen: false);
 
     this.dishList.value = await loadDishFromCategory(httpHandler, category);
     category.dishesList = dishList.value;

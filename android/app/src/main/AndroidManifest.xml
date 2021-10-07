@@ -2,7 +2,8 @@
     package="com.example.menu_xd_3">
    <application
         android:label="menu_xd_3"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

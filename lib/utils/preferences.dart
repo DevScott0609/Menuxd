@@ -51,7 +51,7 @@ class Preferences {
 
   String get language {
     if (_language == null) {
-      return "es";
+      return "en";
     } else {
       return _language;
     }

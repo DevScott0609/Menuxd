@@ -35,25 +35,31 @@ class _LoadingpageState extends State<Loadingpage> {
   void init(BuildContext context) async {
     //final context = scaffoldKey.currentContext;
 
-    final preferences = Provider.of<Preferences>(context);
+    final preferences = Provider.of<Preferences>(context, listen: false);
     final session = preferences.session;
     if (session != null) {
       if (session.accessToken != null) {
-        Provider.of<HttpHandler>(context).session = session;
-        Provider.of<HttpHandler>(context).restaurantClient =
+        Provider.of<HttpHandler>(context, listen: false).session = session;
+        Provider.of<HttpHandler>(context, listen: false).restaurantClient =
             preferences.restaurantClient;
 
-        final orderProvider = Provider.of<OrdersProvider>(context);
+        final orderProvider =
+            Provider.of<OrdersProvider>(context, listen: false);
         if (preferences.order != null) {
           orderProvider.order = preferences.order;
           orderProvider.setTable(preferences.order.table, resetOrder: false);
         }
-        Provider.of<HttpHandler>(context).getQuestions().then((list) {
+        Provider.of<HttpHandler>(context, listen: false)
+            .getQuestions()
+            .then((list) {
           orderProvider.questions = list;
         }).catchError((error) {
           print(error);
         });
-        if (Provider.of<HttpHandler>(context)?.restaurantClient?.name == null) {
+        if (Provider.of<HttpHandler>(context, listen: false)
+                ?.restaurantClient
+                ?.name ==
+            null) {
           Navigator.pushReplacementNamed(context, "/select_client");
         } else {
           Navigator.pushReplacementNamed(context, "/home_page");

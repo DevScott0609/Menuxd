@@ -89,19 +89,22 @@ class _CategoryCardState extends State<CategoryCard> {
   }
 
   Future<void> _onTap(BuildContext context) async {
-   
-     HttpHandler httpHandler = Provider.of<HttpHandler>(context);
-       
-    final drinksProvider = Provider.of<CategoryProvider>(context);
-       final categories = await loadDishFromCategory(httpHandler, widget.category);
-       drinksProvider.categories[widget.index].dishesList=categories;
-       if (widget.category == widget.categorySelected) {
-        Provider.of<CategoryProvider>(context).selectedCategory = null;
-      } else {
-        Provider.of<CategoryProvider>(context).selectedCategory = widget.category;
-      }
+    HttpHandler httpHandler = Provider.of<HttpHandler>(context, listen: false);
+
+    final drinksProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+    final categories = await loadDishFromCategory(httpHandler, widget.category);
+    drinksProvider.categories[widget.index].dishesList = categories;
+    if (widget.category == widget.categorySelected) {
+      Provider.of<CategoryProvider>(context, listen: false).selectedCategory =
+          null;
+    } else {
+      Provider.of<CategoryProvider>(context, listen: false).selectedCategory =
+          widget.category;
+    }
   }
-   Future<List<Dish>> loadDishFromCategory(
+
+  Future<List<Dish>> loadDishFromCategory(
       HttpHandler httpHandler, Category category) async {
     if (category == null) {
       return [];

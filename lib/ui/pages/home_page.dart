@@ -45,8 +45,8 @@ class _HomePageState extends State<HomePage> {
 
   final _categoryScrollController = ScrollController();
   final mainScrollController = ScrollController();
-  int notifications =  0;
-  bool newNitify =  false;
+  int notifications = 0;
+  bool newNitify = false;
   bool showingLanguageDialog = false;
   final swiperController = SwiperController();
   final _mainPageState = ValueNotifier<bool>(false);
@@ -126,9 +126,9 @@ class _HomePageState extends State<HomePage> {
                             setState(() {
                               tableProvider.homePopup = null;
                             });
-                          }
-                          else {
-                            Provider.of<CategoryProvider>(context)
+                          } else {
+                            Provider.of<CategoryProvider>(context,
+                                    listen: false)
                                 .selectedCategory = null;
                             mainScrollController.animateTo(0,
                                 duration: Duration(milliseconds: 500),
@@ -191,9 +191,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget ordersPage(BuildContext context) {
-    final tableProvider = Provider.of<OrdersProvider>(context);
+    final tableProvider = Provider.of<OrdersProvider>(context, listen: false);
     final orderData = tableProvider.order;
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     return Row(
       children: <Widget>[
         Container(
@@ -282,7 +282,8 @@ class _HomePageState extends State<HomePage> {
                               ? null
                               : () {
                                   tableProvider.homePopup = null;
-                                  Provider.of<OrdersProvider>(context)
+                                  Provider.of<OrdersProvider>(context,
+                                          listen: false)
                                       .orderNow();
                                   showMyDialog(
                                       context: context,
@@ -304,7 +305,8 @@ class _HomePageState extends State<HomePage> {
           child: GestureDetector(
             onTap: () {
               setState(() {
-                Provider.of<OrdersProvider>(widget.context).homePopup = null;
+                Provider.of<OrdersProvider>(widget.context, listen: false)
+                    .homePopup = null;
               });
             },
             child: Container(
@@ -320,7 +322,7 @@ class _HomePageState extends State<HomePage> {
     return ValueListenableBuilder<bool>(
         valueListenable: this._mainPageState,
         builder: (context, value, _) {
-        //  print("mainPage $value");
+          // print("mainPage $value");
           if (!value) {
             return getPromotionsWidget(context);
           }
@@ -371,7 +373,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget getDishesList(BuildContext context) {
     isInHome = false;
-    final categoryProvider = Provider.of<CategoryProvider>(context);
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
     // print("dishes list");
     return Container(
       height: 515,
@@ -379,7 +382,8 @@ class _HomePageState extends State<HomePage> {
         itemCount: categoryProvider.categories.length,
         controller: swiperController,
         onIndexChanged: (index) {
-          Provider.of<CategoryProvider>(context).selectedCategoryIndex = index;
+          Provider.of<CategoryProvider>(context, listen: false)
+              .selectedCategoryIndex = index;
         },
         itemBuilder: (context, index) {
           return DishPageWidget(categoryProvider.categories[index]);
@@ -422,9 +426,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget getPromotionsWidget(BuildContext context) {
 //    final lang = Provider.of<AppLanguage>(context);
-    List promotions = Provider.of<OrdersProvider>(context).promotions;
+    List promotions =
+        Provider.of<OrdersProvider>(context, listen: false).promotions;
     List ads = _adsList ?? [];
-    if (Provider.of<OrdersProvider>(widget.context).promotions == null) {
+    if (Provider.of<OrdersProvider>(widget.context, listen: false).promotions ==
+        null) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -480,13 +486,15 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<OrdersProvider>(widget.context).init = DateTime.now();
+    Provider.of<OrdersProvider>(widget.context, listen: false).init =
+        DateTime.now();
     loadCategories(widget.context);
     loadPromotions();
     categoryProvider =
         Provider.of<CategoryProvider>(widget.context, listen: false);
     categoryProvider.addListener(onCategoryChange);
-    final tableProvider = Provider.of<OrdersProvider>(widget.context);
+    final tableProvider =
+        Provider.of<OrdersProvider>(widget.context, listen: false);
     //final preferences = Provider.of<Preferences>(widget.context);
     if (tableProvider.table == null) {
       Future.delayed(Duration(milliseconds: 500)).then((value) {
@@ -497,7 +505,7 @@ class _HomePageState extends State<HomePage> {
     //  Future.delayed(Duration(milliseconds: 500)).then((value) {
     //     test('helo');
     //   });
-  } 
+  }
 
   void onCategoryChange() async {
     final value = categoryProvider.selectedCategoryIndex;
@@ -506,7 +514,7 @@ class _HomePageState extends State<HomePage> {
     }
     _mainPageState.value = categoryProvider.selectedCategory != null;
     double post = (value ?? 50).toDouble() * 120;
-    if(_categoryScrollController.hasClients) {
+    if (_categoryScrollController.hasClients) {
       _categoryScrollController.animateTo(post,
           duration: Duration(milliseconds: 500), curve: Curves.easeIn);
     }
@@ -554,8 +562,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void loadCategories(BuildContext context) async {
-    HttpHandler httpHandler = Provider.of<HttpHandler>(widget.context);
-    final drinksProvider = Provider.of<CategoryProvider>(context);
+    HttpHandler httpHandler =
+        Provider.of<HttpHandler>(widget.context, listen: false);
+    final drinksProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
     if (drinksProvider.categories == null) {
       final categories = await httpHandler.getCategories();
       drinksProvider.categories = categories;
@@ -575,18 +585,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool isInHome = false;
+
   void loadPromotions() async {
     final context = widget.context;
     if (isInHome) {
       return;
     }
-    HttpHandler httpHandler = Provider.of<HttpHandler>(context);
+    HttpHandler httpHandler = Provider.of<HttpHandler>(context, listen: false);
 
     setState(() {
-      Provider.of<OrdersProvider>(context).promotions = null;
+      Provider.of<OrdersProvider>(context, listen: false).promotions = null;
       _adsList = null;
     });
-    Provider.of<OrdersProvider>(context).promotions =
+    Provider.of<OrdersProvider>(context, listen: false).promotions =
         await httpHandler.getPromotions();
     _adsList = await httpHandler.getAds();
     if (!mounted) return;
@@ -595,24 +606,26 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onOrdersPressed(BuildContext context) {
-    if (Provider.of<OrdersProvider>(widget.context).homePopup ==
+    if (Provider.of<OrdersProvider>(widget.context, listen: false).homePopup ==
         HomePopup.ORDERS) {
       setState(() {
-        Provider.of<OrdersProvider>(widget.context).homePopup = null;
+        Provider.of<OrdersProvider>(widget.context, listen: false).homePopup =
+            null;
       });
     } else {
       setState(() {
-        Provider.of<OrdersProvider>(widget.context).homePopup = HomePopup.ORDERS;
+        Provider.of<OrdersProvider>(widget.context, listen: false).homePopup =
+            HomePopup.ORDERS;
       });
     }
   }
 
   void _onPayBillPressed(BuildContext context) {
-    final tableProvider = Provider.of<OrdersProvider>(context);
+    final tableProvider = Provider.of<OrdersProvider>(context, listen: false);
     final orderData = tableProvider.order;
     if (orderData.total > 0) {
       tableProvider.homePopup = null;
-      Provider.of<OrdersProvider>(context).payTheBill();
+      Provider.of<OrdersProvider>(context, listen: false).payTheBill();
       _showPayTheBill(widget.context);
     }
   }
@@ -623,15 +636,16 @@ class _HomePageState extends State<HomePage> {
 
   Widget _getTopMenu(BuildContext context) {
     final notifications =
-        Provider.of<OrdersProvider>(context).promotions.length;
-    
-     Future.delayed(Duration(seconds: 25)).then((value) {
-        newNitify =true;
-      });
-    
-    final drinksProvider = Provider.of<CategoryProvider>(context);
-    final lang = Provider.of<AppLanguage>(context);
-    final tableProvider = Provider.of<OrdersProvider>(context);
+        Provider.of<OrdersProvider>(context, listen: false).promotions.length;
+
+    Future.delayed(Duration(seconds: 25)).then((value) {
+      newNitify = true;
+    });
+
+    final drinksProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
+    final tableProvider = Provider.of<OrdersProvider>(context, listen: false);
     final tableName = tableProvider.table == null
         ? "N"
         : tableProvider.table.number.toString();
@@ -725,70 +739,70 @@ class _HomePageState extends State<HomePage> {
             width: 30,
           ),
           FutureBuilder(
-                future: Future.delayed(Duration(seconds: 25)),
-                builder: (c, s) => s.connectionState == ConnectionState.done || newNitify 
-                    ?
-                GestureDetector(
-                    onTap: () {
-                      _showNotifications(context);
-                    },
-                    child:Container(
-                    height: 22,
-                    padding: const EdgeInsets.only(right: 60),
-                    child: Stack(
-                      children: <Widget>[
-
-                    Image.asset(
-                    "assets/home_icons/ring.png",
-                      height: 22,
-                      width: 17.95,
-                      color: notifications > 0 ? null : ColorPalette.gray,
-                    ),
-                    if (notifications > 0)
-                Transform.translate(
-                  offset: Offset(13, -10),
-                  child: Container(
-                    height: 16,
-                    width: 16,
-                    padding: EdgeInsets.only(top: 4),
-                    decoration: BoxDecoration(
-                        color: Color(0xfffa456f),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.white,
-                              offset: Offset(-0.5, 0.5),
-                              blurRadius: 0,
-                              spreadRadius: 2)
-                        ]),
-                    child: Text(
-                      notifications.toString(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 9,
-                          fontWeight: FontWeight.w900),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
-    )       : Container(
-        height: 22,
-        padding: const EdgeInsets.only(right: 60),
-        child: Stack(
-          children: <Widget>[
-
-        Image.asset(
-        "assets/home_icons/ring.png",
-          height: 22,
-          width: 17.95,
-          color: ColorPalette.gray,
-        ),
-    ],
-    ),
-    ))
+              future: Future.delayed(Duration(seconds: 25)),
+              builder: (c, s) =>
+                  s.connectionState == ConnectionState.done || newNitify
+                      ? GestureDetector(
+                          onTap: () {
+                            _showNotifications(context);
+                          },
+                          child: Container(
+                            height: 22,
+                            padding: const EdgeInsets.only(right: 60),
+                            child: Stack(
+                              children: <Widget>[
+                                Image.asset(
+                                  "assets/home_icons/ring.png",
+                                  height: 22,
+                                  width: 17.95,
+                                  color: notifications > 0
+                                      ? null
+                                      : ColorPalette.gray,
+                                ),
+                                if (notifications > 0)
+                                  Transform.translate(
+                                    offset: Offset(13, -10),
+                                    child: Container(
+                                      height: 16,
+                                      width: 16,
+                                      padding: EdgeInsets.only(top: 4),
+                                      decoration: BoxDecoration(
+                                          color: Color(0xfffa456f),
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.white,
+                                                offset: Offset(-0.5, 0.5),
+                                                blurRadius: 0,
+                                                spreadRadius: 2)
+                                          ]),
+                                      child: Text(
+                                        notifications.toString(),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 9,
+                                            fontWeight: FontWeight.w900),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ))
+                      : Container(
+                          height: 22,
+                          padding: const EdgeInsets.only(right: 60),
+                          child: Stack(
+                            children: <Widget>[
+                              Image.asset(
+                                "assets/home_icons/ring.png",
+                                height: 22,
+                                width: 17.95,
+                                color: ColorPalette.gray,
+                              ),
+                            ],
+                          ),
+                        ))
         ],
       ),
     );

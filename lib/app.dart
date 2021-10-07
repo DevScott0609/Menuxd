@@ -24,10 +24,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final preferences = Provider.of<Preferences>(context);
+    final preferences = Provider.of<Preferences>(context, listen: false);
     _ordersProvider.preferences = preferences;
     _appLanguage.locale = Locale(preferences.language);
-
     return MultiProvider(
       providers: [
         Provider<HttpHandler>.value(value: _httpHandler),
@@ -36,6 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<CategoryProvider>.value(value: _categoryProvider)
       ],
       child: CupertinoApp(
+        debugShowCheckedModeBanner: false,
         title: 'MenuXd',
         theme: CupertinoThemeData(
           textTheme: CupertinoTextThemeData(
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        initialRoute: "/",
+        initialRoute: "/hello_page",
         onGenerateRoute: (RouteSettings settings) {
           return MaterialPageRoute(builder: (BuildContext context) {
             switch (settings.name) {

@@ -11,8 +11,6 @@ import '../../utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class CallWaiterWidget extends StatefulWidget {
-
-
   @override
   _CallWaiterWidgetState createState() => _CallWaiterWidgetState();
 }
@@ -21,27 +19,26 @@ class _CallWaiterWidgetState extends State<CallWaiterWidget> {
   @override
   Widget build(BuildContext context) {
     final lang = Provider.of<AppLanguage>(context);
-    final tableProvider = Provider.of<OrdersProvider>(context);
+    final tableProvider = Provider.of<OrdersProvider>(context, listen: false);
 
     return GestureDetector(
       onTap: () {
-        if(!tableProvider.callingWaiter){
+        if (!tableProvider.callingWaiter) {
           callWaiter(context);
         }
-
       },
       child: Column(
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: tableProvider.callingWaiter ? ColorPalette.melon: null,
+              color: tableProvider.callingWaiter ? ColorPalette.melon : null,
             ),
             padding: EdgeInsets.all(15),
             child: Image.asset(
               "assets/home_icons/call_waiter.png",
               height: 35,
-              color: tableProvider.callingWaiter ? null: Colors.grey[800] ,
+              color: tableProvider.callingWaiter ? null : Colors.grey[800],
             ),
           ),
           Transform.translate(
@@ -50,9 +47,12 @@ class _CallWaiterWidgetState extends State<CallWaiterWidget> {
                 lang.w(Word.call_waiter),
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 13,
-                    color:tableProvider.callingWaiter ? ColorPalette.melon:  Colors.grey,
-                    fontFamily: "SofiaPro", fontWeight: FontWeight.bold),
+                    fontSize: 13,
+                    color: tableProvider.callingWaiter
+                        ? ColorPalette.melon
+                        : Colors.grey,
+                    fontFamily: "SofiaPro",
+                    fontWeight: FontWeight.bold),
               ))
         ],
       ),
@@ -62,12 +62,12 @@ class _CallWaiterWidgetState extends State<CallWaiterWidget> {
   void callWaiter(BuildContext context) async {
     print("calling waiter");
     setState(() {
-      Provider.of<OrdersProvider>(context).callWaiter();
+      Provider.of<OrdersProvider>(context, listen: false).callWaiter();
     });
     showMyDialog(context: context, child: CallWaiterDialog());
     await Future.delayed(Duration(seconds: 20));
     setState(() {
-      Provider.of<OrdersProvider>(context).callWaiter2();
+      Provider.of<OrdersProvider>(context, listen: false).callWaiter2();
     });
   }
 }

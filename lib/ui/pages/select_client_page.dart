@@ -131,8 +131,10 @@ class _SelectClientPageState extends State<SelectClientPage> {
   }
 
   void selectClient(BuildContext context) {
-    Provider.of<Preferences>(context).restaurantClient = selectedClient;
-    Provider.of<HttpHandler>(context).restaurantClient = selectedClient;
+    Provider.of<Preferences>(context, listen: false).restaurantClient =
+        selectedClient;
+    Provider.of<HttpHandler>(context, listen: false).restaurantClient =
+        selectedClient;
     Navigator.pushReplacementNamed(context, "/");
   }
 }

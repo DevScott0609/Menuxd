@@ -14,7 +14,7 @@ class AdWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HttpHandler httpHandler = Provider.of<HttpHandler>(context);
+    HttpHandler httpHandler = Provider.of<HttpHandler>(context, listen: false);
 
     return GestureDetector(
       onTap: () async {

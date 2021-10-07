@@ -127,11 +127,11 @@ class _CodePageState extends State<CodePage> {
         this.password += number.toString();
       });
       if (this.password.length == 4) {
-        final waiter =
-            await Provider.of<HttpHandler>(context).checkWaiterCode(password);
+        final waiter = await Provider.of<HttpHandler>(context, listen: false)
+            .checkWaiterCode(password);
         if (waiter != null) {
           print("Hello page");
-          Provider.of<OrdersProvider>(context).waiter = waiter;
+          Provider.of<OrdersProvider>(context, listen: false).waiter = waiter;
           Navigator.pop(context);
           Navigator.pushNamed(context, "/tables");
         } else {

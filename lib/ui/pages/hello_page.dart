@@ -19,7 +19,7 @@ class _HelloPageState extends State<HelloPage> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((val) {
       hideKeyBoard(context);
     });
@@ -27,8 +27,9 @@ class _HelloPageState extends State<HelloPage> {
       child: Stack(
         children: <Widget>[
           CachedNetworkImage(
-            imageUrl:
-                Provider.of<Preferences>(context).restaurantClient.picture,
+            imageUrl: Provider.of<Preferences>(context, listen: false)
+                .restaurantClient
+                .picture,
             placeholder: (context, url) {
               return Image.asset("assets/home_back.png");
             },

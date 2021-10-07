@@ -26,12 +26,11 @@ dependencies:
   path_provider: ^1.6.24
   shared_preferences: ^0.5.3+4
   cupertino_icons: ^0.1.2
-  http: ^0.12.0+2
+  http: ^0.12.0+3
   dio: ^2.1.16
   responsive: ^0.2.2
-  # provider: ^5.0.0
   provider: ^4.3.3
-  cached_network_image: ^2.0.0-rc
+  cached_network_image: ^2.5.1
   flutter_swiper: ^1.1.6
   queries: ^0.1.12
   currency_text_input_formatter: ^1.0.5

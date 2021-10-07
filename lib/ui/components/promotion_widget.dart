@@ -22,13 +22,14 @@ class PromotionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HttpHandler httpHandler = Provider.of<HttpHandler>(context);
+    HttpHandler httpHandler = Provider.of<HttpHandler>(context, listen: false);
 
     return DefaultTextStyle(
       style: TextStyle(color: Colors.white),
       child: GestureDetector(
         onTap: () async {
-          Provider.of<CategoryProvider>(context).promotionSelected = promotion;
+          Provider.of<CategoryProvider>(context, listen: false)
+              .promotionSelected = promotion;
           httpHandler.sendPromotionClick(promotion);
         },
         child: Container(

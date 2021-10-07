@@ -27,7 +27,7 @@ class _SelectTablePageState extends State<SelectTablePage> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
     return CupertinoPageScaffold(
       backgroundColor: Color(0xfff6f9fc),
       child: Stack(
@@ -244,7 +244,8 @@ class _SelectTablePageState extends State<SelectTablePage> {
   }
 
   void loadData(BuildContext context) async {
-    final tables = await Provider.of<HttpHandler>(widget.context).getTables();
+    final tables = await Provider.of<HttpHandler>(widget.context, listen: false)
+        .getTables();
 
     List<RestaurantTable> tables1 = [];
     List<RestaurantTable> tablesBar = [];
@@ -264,7 +265,8 @@ class _SelectTablePageState extends State<SelectTablePage> {
     setState(() {
       this.tablesList = tables1;
       this.barList = tablesBar;
-      this.selectedTable = Provider.of<OrdersProvider>(context).table;
+      this.selectedTable =
+          Provider.of<OrdersProvider>(context, listen: false).table;
     });
     print(tablesBar);
   }
@@ -276,7 +278,7 @@ class _SelectTablePageState extends State<SelectTablePage> {
   }
 
   void saveTable(BuildContext context) {
-    Provider.of<OrdersProvider>(context).setTable(selectedTable);
+    Provider.of<OrdersProvider>(context, listen: false).setTable(selectedTable);
     Navigator.of(context).pushReplacementNamed("/hello_page");
   }
 }
@@ -291,7 +293,7 @@ class TableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final language = Provider.of<AppLanguage>(context);
+    final language = Provider.of<AppLanguage>(context, listen: false);
     return GestureDetector(
       onTap: () {
         onTableSelected(this.table);

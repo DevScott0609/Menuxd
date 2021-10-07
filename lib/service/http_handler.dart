@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import './session.dart';
@@ -26,18 +27,15 @@ class HttpHandler {
 
   Future<Session> login(String user, String password) async {
     final url = "$API_SERVER/login";
-
     try {
-      http.Response response = await http.post(url,
+      var response = await http.post(url,
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
             HttpHeaders.acceptHeader: 'application/json',
           },
           body: json.encode({"email": user, "password": password}));
-
       if (response.statusCode == 200) {
         final jsonData = json.decode(utf8.decode(response.bodyBytes));
-
         session = Session()
           ..setLoginData(jsonData["token"], User.fromJson(jsonData["user"]));
         return session;
@@ -51,7 +49,6 @@ class HttpHandler {
 
   Future<List> getRestaurantsClients() async {
     final url = "$API_SERVER/clients/user/${session.user.id}";
-
     final headers = getHeader();
     try {
       final response = await http.get(url, headers: headers);
@@ -191,7 +188,6 @@ class HttpHandler {
       url,
       headers: getHeader(),
     );
-
     if (response.statusCode == 200) {
       final jsonList = json.decode(utf8.decode(response.bodyBytes)) as List;
       return jsonList.map((value) {

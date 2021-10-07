@@ -66,8 +66,8 @@ class _OrderElementPageState extends State<OrderElementPage> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
-    tableProvider = Provider.of<OrdersProvider>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
+    tableProvider = Provider.of<OrdersProvider>(context, listen: false);
     // FlutterMoneyFormatter moneyFormatter = FlutterMoneyFormatter(
     //     amount: widget.myOrder.dish.total(widget.myOrder.mount),
     //     settings: MoneyFormatterSettings(

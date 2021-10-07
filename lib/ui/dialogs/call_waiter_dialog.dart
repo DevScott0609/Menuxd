@@ -18,7 +18,7 @@ class _CallWaiterDialogState extends State<CallWaiterDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Provider.of<AppLanguage>(context);
+    final lang = Provider.of<AppLanguage>(context, listen: false);
 
     return MyDialog(
       width: 480,
@@ -82,17 +82,19 @@ class _CallWaiterDialogState extends State<CallWaiterDialog> {
                 width: double.infinity,
                 height: 56,
                 child: FlatButton(
-
                   highlightColor: ColorPalette.melon,
-                  onHighlightChanged: (pressed){
+                  onHighlightChanged: (pressed) {
                     setState(() {
-                      buttonColor = pressed ?Colors.white:ColorPalette.gray;
+                      buttonColor = pressed ? Colors.white : ColorPalette.gray;
                     });
                   },
                   color: Colors.white,
                   child: Text(
                     lang.w(Word.thanks),
-                    style: TextStyle(fontFamily: "SofiaProBold", fontSize: 17, color: buttonColor),
+                    style: TextStyle(
+                        fontFamily: "SofiaProBold",
+                        fontSize: 17,
+                        color: buttonColor),
                   ),
                   onPressed: () {
                     Navigator.pop(context);
