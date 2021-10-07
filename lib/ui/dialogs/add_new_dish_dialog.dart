@@ -14,7 +14,7 @@ import '../../ui/dialogs/send_order_dialog.dart';
 import '../../utils/color_palette.dart';
 import '../../utils/utils.dart';
 import 'package:provider/provider.dart';
-// import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 import 'added_orders_dialog.dart';
 import 'drinks_dialog.dart';
@@ -39,7 +39,7 @@ class _AddNewDishDialogState extends State<AddNewDishDialog> {
   int _mount = 1;
   bool editing = false;
   Dish editingDish;
-  
+
   Color addToOrderButtonColor = ColorPalette.gray;
 
   Color addNowButtonColor = Colors.white;
@@ -386,10 +386,10 @@ class _AddNewDishDialogState extends State<AddNewDishDialog> {
   }
 
   Widget price(BuildContext context, AppLanguage lang) {
-    // FlutterMoneyFormatter moneyFormatter = FlutterMoneyFormatter(
-    //     amount: editingDish.total(_mount),
-    //     settings: MoneyFormatterSettings(
-    //         thousandSeparator: ".", decimalSeparator: ","));
+    FlutterMoneyFormatter moneyFormatter = FlutterMoneyFormatter(
+        amount: editingDish.total(_mount),
+        settings: MoneyFormatterSettings(
+            thousandSeparator: ".", decimalSeparator: ","));
     return Material(
       child: Container(
         color: Colors.white,
@@ -417,11 +417,11 @@ class _AddNewDishDialogState extends State<AddNewDishDialog> {
                         color: ColorPalette.melon,
                       ),
                       children: [
-                        // TextSpan(
-                        //     text:
-                        //         "${moneyFormatter.output.withoutFractionDigits}",
-                        //     style: TextStyle(
-                        //         fontSize: 30, fontWeight: FontWeight.bold))
+                        TextSpan(
+                            text:
+                                "${moneyFormatter.output.withoutFractionDigits}",
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold))
                       ]),
                 ),
               ),
@@ -478,7 +478,7 @@ class _AddNewDishDialogState extends State<AddNewDishDialog> {
   }
 
   void addDishToOrder(BuildContext context, {bool orderNow = false}) {
-    Navigator.pop(context);    
+    Navigator.pop(context);
     if (widget.editingDishInOrder) {
       Provider.of<OrdersProvider>(context).updateOrder(
           OrderItem(

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-// import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'dart:ui';
 import '../../models/dish.dart';
 import '../../ui/animations/fade_in_to_up.dart';
@@ -17,10 +17,10 @@ class DishWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // FlutterMoneyFormatter moneyFormatter = FlutterMoneyFormatter(
-    //     amount: (dish.price == null) ? 999999999 : dish.price.toDouble(),
-    //     settings: MoneyFormatterSettings(
-    //         thousandSeparator: ".", decimalSeparator: ","));
+    FlutterMoneyFormatter moneyFormatter = FlutterMoneyFormatter(
+        amount: (dish.price == null) ? 999999999 : dish.price.toDouble(),
+        settings: MoneyFormatterSettings(
+            thousandSeparator: ".", decimalSeparator: ","));
     final height = 298.87;
     final width = 273.0;
     final imageHeight = height * 0.65;
@@ -104,25 +104,25 @@ class DishWidget extends StatelessWidget {
                                   TextSpan(
                                     text: dish.name,
                                   ),
-                                  // TextSpan(
-                                  //     text:
-                                  //         "\t\tGs. ${(dish.price == null) ? "00" : moneyFormatter.output.withoutFractionDigits}",
-                                  //     style: TextStyle(
-                                  //         color: Colors.white,
-                                  //         fontSize: 18,
-                                  //         fontFamily: "SofiaProBold"))
+                                  TextSpan(
+                                      text:
+                                          "\t\tGs. ${(dish.price == null) ? "00" : moneyFormatter.output.withoutFractionDigits}",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontFamily: "SofiaProBold"))
                                 ]),
                           ),
-                          // Align(
-                          //   alignment: Alignment.bottomRight,
-                          //   child: Text(
-                          //       "\t\tGs. ${(dish.price == null) ? "00" : moneyFormatter.output.withoutFractionDigits}",
-                          //       style: TextStyle(
-                          //           color: ColorPalette.melon,
-                          //           fontSize: 17,
-                          //           fontFamily: "SofiaPro",
-                          //           fontWeight: FontWeight.bold)),
-                          // )
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                                "\t\tGs. ${(dish.price == null) ? "00" : moneyFormatter.output.withoutFractionDigits}",
+                                style: TextStyle(
+                                    color: ColorPalette.melon,
+                                    fontSize: 17,
+                                    fontFamily: "SofiaPro",
+                                    fontWeight: FontWeight.bold)),
+                          )
                         ],
                       ),
                     ),

@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
-// import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import '../../internacionalization/app_language.dart';
 import '../../models/order.dart';
 import '../../providers/table_provider.dart';
@@ -68,10 +68,10 @@ class _OrderElementPageState extends State<OrderElementPage> {
   Widget build(BuildContext context) {
     final lang = Provider.of<AppLanguage>(context, listen: false);
     tableProvider = Provider.of<OrdersProvider>(context, listen: false);
-    // FlutterMoneyFormatter moneyFormatter = FlutterMoneyFormatter(
-    //     amount: widget.myOrder.dish.total(widget.myOrder.mount),
-    //     settings: MoneyFormatterSettings(
-    //         thousandSeparator: ".", decimalSeparator: ","));
+    FlutterMoneyFormatter moneyFormatter = FlutterMoneyFormatter(
+        amount: widget.myOrder.dish.total(widget.myOrder.mount),
+        settings: MoneyFormatterSettings(
+            thousandSeparator: ".", decimalSeparator: ","));
     if (tableProvider.homePopup == null) {
       xPosition = 0;
       animationDone = false;
@@ -272,16 +272,16 @@ class _OrderElementPageState extends State<OrderElementPage> {
                                 ],
                               ),
                             ),
-                            // Align(
-                            //   child: Text(
-                            //     "\t\tGs. ${(widget.myOrder.dish.price == null) ? "00" : moneyFormatter.output.withoutFractionDigits}",
-                            //     style: TextStyle(
-                            //         color: Color(0xfffa456f),
-                            //         fontSize: 16,
-                            //         fontFamily: "SofiaProBold"),
-                            //   ),
-                            //   alignment: Alignment.bottomLeft,
-                            // )
+                            Align(
+                              child: Text(
+                                "\t\tGs. ${(widget.myOrder.dish.price == null) ? "00" : moneyFormatter.output.withoutFractionDigits}",
+                                style: TextStyle(
+                                    color: Color(0xfffa456f),
+                                    fontSize: 16,
+                                    fontFamily: "SofiaProBold"),
+                              ),
+                              alignment: Alignment.bottomLeft,
+                            )
                           ],
                         ),
                       ),

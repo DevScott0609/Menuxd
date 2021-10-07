@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_money_formatter/flutter_money_formatter.dart';
-import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import '../../service/http_handler.dart';
 import '../../internacionalization/app_language.dart';
@@ -242,8 +241,7 @@ class _HomePageState extends State<HomePage> {
                         height: 80,
                         child: CupertinoButton(
                           child: Text(
-                            "Error, Error, Error",
-                            // "${lang.w(Word.pay_now)} \nGs. ${FlutterMoneyFormatter(amount: orderData.total, settings: MoneyFormatterSettings(thousandSeparator: ".", decimalSeparator: ",")).output.withoutFractionDigits}",
+                            "${lang.w(Word.pay_now)} \nGs. ${FlutterMoneyFormatter(amount: orderData.total, settings: MoneyFormatterSettings(thousandSeparator: ".", decimalSeparator: ",")).output.withoutFractionDigits}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 16, fontFamily: "SofiaProBold"),
