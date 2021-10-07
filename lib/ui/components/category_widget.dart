@@ -97,7 +97,7 @@ class _CategoryCardState extends State<CategoryCard> {
     drinksProvider.categories[widget.index].dishesList = categories;
     if (widget.category == widget.categorySelected) {
       Provider.of<CategoryProvider>(context, listen: false).selectedCategory =
-          null;
+          widget.category;
     } else {
       Provider.of<CategoryProvider>(context, listen: false).selectedCategory =
           widget.category;

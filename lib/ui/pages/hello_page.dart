@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../internacionalization/app_language.dart';
+import '../../providers/drinks_provider.dart';
 import '../../utils/color_palette.dart';
 import '../../utils/preferences.dart';
 import '../../utils/utils.dart';
@@ -213,6 +214,8 @@ class _HelloPageState extends State<HelloPage> {
   }
 
   void _openPage(BuildContext context) {
+    Provider.of<CategoryProvider>(context, listen: false).selectedCategory =
+        null;
     Navigator.pushReplacementNamed(context, "/home_page");
   }
 }

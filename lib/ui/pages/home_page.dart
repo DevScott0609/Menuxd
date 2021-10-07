@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                                 minHeight: 150,
                                 maxHeight: 150,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 40),
+                                  padding: const EdgeInsets.only(left: 30),
                                   child: getCategoriesWidget(context),
                                 ),
                               ),
@@ -479,6 +479,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   CategoryProvider categoryProvider;
+
   @override
   void initState() {
     super.initState();
@@ -630,6 +631,15 @@ class _HomePageState extends State<HomePage> {
     categoryProvider.selectedCategoryIndex = index;
   }
 
+  // AnimationController _animationController;
+
+  // void _runAnimation() async {
+  //   for (int i = 0; i < 3; i++) {
+  //     await _animationController.forward();
+  //     await _animationController.reverse();
+  //   }
+  // }
+
   Widget _getTopMenu(BuildContext context) {
     final notifications =
         Provider.of<OrdersProvider>(context, listen: false).promotions.length;
@@ -755,6 +765,25 @@ class _HomePageState extends State<HomePage> {
                                       ? null
                                       : ColorPalette.gray,
                                 ),
+                                // RotationTransition(
+                                //   turns: Tween(begin: 0.0, end: -.1)
+                                //       .chain(CurveTween(curve: Curves.elasticIn))
+                                //       .animate(_animationController),
+                                //   child: Icon(
+                                //     Icons.notifications_none,
+                                //     size: 28,
+                                //     color: notifications > 0
+                                //         ? Color(0xfffa456f)
+                                //         : ColorPalette.gray,
+                                //   ),
+                                // ),
+                                // Icon(
+                                //   Icons.notifications_none,
+                                //   size: 28,
+                                //   color: notifications > 0
+                                //       ? Color(0xfffa456f)
+                                //       : ColorPalette.gray,
+                                // ),
                                 if (notifications > 0)
                                   Transform.translate(
                                     offset: Offset(13, -10),
@@ -796,6 +825,11 @@ class _HomePageState extends State<HomePage> {
                                 width: 17.95,
                                 color: ColorPalette.gray,
                               ),
+                              // Icon(
+                              //   Icons.notifications_none,
+                              //   size: 28,
+                              //   color: Color(0xfffa456f),
+                              // ),
                             ],
                           ),
                         ))

@@ -28,6 +28,7 @@ class PromotionWidget extends StatelessWidget {
       style: TextStyle(color: Colors.white),
       child: GestureDetector(
         onTap: () async {
+          print("promotion widget clicked!");
           Provider.of<CategoryProvider>(context, listen: false)
               .promotionSelected = promotion;
           httpHandler.sendPromotionClick(promotion);
