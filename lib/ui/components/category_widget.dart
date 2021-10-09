@@ -10,7 +10,7 @@ import '../../providers/drinks_provider.dart';
 typedef OnCategorySelected = void Function(int index);
 
 class CategoryCard extends StatefulWidget {
-  Category category;
+  final Category category;
   final Category categorySelected;
   final int index;
 

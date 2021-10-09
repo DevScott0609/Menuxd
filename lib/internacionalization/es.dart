@@ -126,6 +126,8 @@ String es(Word word) {
       return "Seleccione su local";
     case Word.promotions:
       return "Promociones";
+    case Word.view_all:
+      return "Ver todo";
     case Word.ad:
       return "Publicidad";
     case Word.empty_notifications:

@@ -85,6 +85,7 @@ enum Word {
   error_clients_dont_found,
   select_your_local,
   promotions,
+  view_all,
   ad,
   empty_notifications,
   takeaw,

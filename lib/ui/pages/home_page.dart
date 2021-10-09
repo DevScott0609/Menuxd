@@ -125,13 +125,10 @@ class _HomePageState extends State<HomePage> {
                       GestureDetector(
                         onTap: () {
                           if (tableProvider.homePopup == HomePopup.ORDERS) {
-                            setState(() {
-                              tableProvider.homePopup = null;
-                            });
+                            categoryProvider.isPressedViewAllPromos = false;
                           } else {
-                            Provider.of<CategoryProvider>(context,
-                                    listen: false)
-                                .selectedCategory = null;
+                            categoryProvider.selectedCategory = null;
+                            categoryProvider.isPressedViewAllPromos = false;
                             mainScrollController.animateTo(0,
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.easeIn);
@@ -324,10 +321,15 @@ class _HomePageState extends State<HomePage> {
         valueListenable: this._mainPageState,
         builder: (context, value, _) {
           // print("mainPage $value");
-          if (!value) {
-            return getPromotionsWidget(context);
+          if (categoryProvider.isPressedViewAllPromos == true) {
+            return getDishesList(context);
+          } else {
+            if (!value) {
+              return getPromotionsWidget(context);
+            } else {
+              return getDishesList(context);
+            }
           }
-          return getDishesList(context);
         });
   }
 
@@ -348,6 +350,21 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[Text("No se encontraron categorías")],
         );
       } else {
+        // return ListView.builder(
+        //   controller: _categoryScrollController,
+        //   shrinkWrap: true,
+        //   scrollDirection: Axis.horizontal,
+        //   itemCount: value.categories.length,
+        //   itemBuilder: (ctx, index) {
+        //     return CategoryCard(
+        //       category: value.categories[index],
+        //       categorySelected: value.selectedCategory == null
+        //           ? null
+        //           : value.selectedCategory,
+        //       index: index,
+        //     );
+        //   },
+        // );
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           controller: _categoryScrollController,
@@ -421,7 +438,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget getPromotionsWidget(BuildContext context) {
-//    final lang = Provider.of<AppLanguage>(context, listen: false);
+    // final lang = Provider.of<AppLanguage>(context, listen: false);
     List promotions =
         Provider.of<OrdersProvider>(context, listen: false).promotions;
     List ads = _adsList ?? [];
@@ -445,12 +462,35 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        TextLang(
-          Word.promotions,
-          style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              fontFamily: "TimesBold"),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextLang(
+              Word.promotions,
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "TimesBold"),
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  categoryProvider.isPressedViewAllPromos = true;
+                  print(categoryProvider.isPressedViewAllPromos);
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: TextLang(
+                  Word.view_all,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: "TimesBold"),
+                ),
+              ),
+            ),
+          ],
         ),
         SizedBox(
           height: 10,
@@ -680,9 +720,13 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 35),
                   child: Text(
-                    (value.selectedCategory == null)
-                        ? lang.w(Word.categories)
-                        : value.selectedCategory.title,
+                    categoryProvider.isPressedViewAllPromos == true
+                        ? lang.w(Word.promotions)
+                        : ((value.selectedCategory == null &&
+                                categoryProvider.isPressedViewAllPromos ==
+                                    false)
+                            ? lang.w(Word.categories)
+                            : value.selectedCategory.title),
                     style: TextStyle(
                         fontSize: 30,
                         color: Color(0xff555f69),

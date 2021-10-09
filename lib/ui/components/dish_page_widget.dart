@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:menuxd/models/promotion.dart';
+import 'package:menuxd/providers/drinks_provider.dart';
 import '../../service/http_handler.dart';
 import '../../internacionalization/app_language.dart';
 import '../../internacionalization/word.dart';
@@ -17,7 +19,6 @@ class DishPageWidget extends StatelessWidget {
   final dishList = ValueNotifier<List>(null);
 
   DishPageWidget(this.category);
-
   @override
   Widget build(BuildContext context) {
     final lang = Provider.of<AppLanguage>(context, listen: false);
@@ -82,6 +83,12 @@ class DishPageWidget extends StatelessWidget {
   }
 
   void loadDish(BuildContext context) async {
+    var promotionDishList = [];
+    HttpHandler httpHandler = Provider.of<HttpHandler>(context, listen: false);
+    var categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+    var promotions = await loadPromotionDishes(httpHandler);
+    for (var promotion in promotions) promotionDishList.add(promotion.dish);
     if (category.dishesList != null) {
       //Si ya se tiene cargado, simplemente se cancela la carga
       if (category.id == 560) {
@@ -91,14 +98,27 @@ class DishPageWidget extends StatelessWidget {
         promotions.forEach((fruit) => {newPromo.add((fruit.dish))});
         this.dishList.value = newPromo;
       } else {
-        this.dishList.value = category.dishesList;
+        if (categoryProvider.isPressedViewAllPromos) {
+          this.dishList.value = promotionDishList;
+          // categoryProvider.isPressedViewAllPromos = false;
+        } else {
+          this.dishList.value = category.dishesList;
+        }
       }
       return;
     }
-    HttpHandler httpHandler = Provider.of<HttpHandler>(context, listen: false);
+    if (categoryProvider.isPressedViewAllPromos) {
+      this.dishList.value = promotionDishList;
+      category.dishesList = dishList.value;
+      // categoryProvider.isPressedViewAllPromos = false;
+    } else {
+      this.dishList.value = await loadDishFromCategory(httpHandler, category);
+      category.dishesList = dishList.value;
+    }
+  }
 
-    this.dishList.value = await loadDishFromCategory(httpHandler, category);
-    category.dishesList = dishList.value;
+  Future<List<Promotion>> loadPromotionDishes(HttpHandler httpHandler) async {
+    return await httpHandler.getPromotions();
   }
 
   Future<List<Dish>> loadDishFromCategory(

@@ -7,6 +7,7 @@ import '../models/promotion.dart';
 class CategoryProvider extends ChangeNotifier {
   List<Category> _categories;
   Category _selectedCategory;
+  bool _isPressedViewAllPromos;
 
   get selectedCategoryIndex {
     return categories?.indexOf(_selectedCategory) ?? null;
@@ -20,13 +21,22 @@ class CategoryProvider extends ChangeNotifier {
 
   set categories(List<Category> value) {
     _categories = value;
+    _isPressedViewAllPromos = false;
     //notifyListeners();
   }
 
   Category get selectedCategory => _selectedCategory;
 
+  bool get isPressedViewAllPromos => _isPressedViewAllPromos;
+
   set selectedCategory(Category value) {
     _selectedCategory = value;
+    _isPressedViewAllPromos = false;
+    notifyListeners();
+  }
+
+  set isPressedViewAllPromos(bool value) {
+    _isPressedViewAllPromos = value;
     notifyListeners();
   }
 
@@ -73,6 +83,17 @@ class CategoryProvider extends ChangeNotifier {
       }
     }
     return null;
+  }
+
+  List<Dish> getSuggestedDishes(Category category) {
+    List<Dish> suggestedDishes = [];
+    for (Dish dish in category.dishesList) {
+      if (dish.suggested == true) {
+        suggestedDishes.add(dish);
+      }
+    }
+    print("Suggested Dishes Length : ${suggestedDishes.length}");
+    return suggestedDishes;
   }
 
   String imageOfDish(Dish dishToSearch) {

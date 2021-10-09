@@ -32,6 +32,9 @@ class _DrinksDetailsDialogState extends State<DrinksDetailsDialog> {
   Widget build(BuildContext context) {
     final lang = Provider.of<AppLanguage>(context, listen: false);
     final list = widget.category.dishesList;
+    List<Dish> suggestedList = [];
+    suggestedList = Provider.of<CategoryProvider>(context, listen: false)
+        .getSuggestedDishes(widget.category);
     return MyDialog(
       opacity: 0.0,
       width: 700,
@@ -58,9 +61,10 @@ class _DrinksDetailsDialogState extends State<DrinksDetailsDialog> {
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children:
-                    List.generate(list.length > 3 ? 3 : list.length, (index) {
-                  final dish = list[index];
+                children: List.generate(
+                    suggestedList.length > 3 ? 3 : suggestedList.length,
+                    (index) {
+                  final dish = suggestedList[index];
                   return DrinkDetailsWidget(
                     onSelect: () {
                       _selectDrink(dish);
@@ -69,11 +73,11 @@ class _DrinksDetailsDialogState extends State<DrinksDetailsDialog> {
                     dish: dish,
                   );
                 })
-                      ..addAll([
-                        OthersDrinkWidget(
-                          category: widget.category,
-                        )
-                      ])),
+                  ..addAll([
+                    OthersDrinkWidget(
+                      category: widget.category,
+                    )
+                  ])),
             Expanded(
               child: SizedBox(),
             ),
