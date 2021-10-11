@@ -39,7 +39,7 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<Ad> _adsList;
 
   final _categoryScrollController = ScrollController();
@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
   final swiperController = SwiperController();
   final _mainPageState = ValueNotifier<bool>(false);
   final _scaffold = GlobalKey<ScaffoldState>();
+  AnimationController _animationController;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                                 minHeight: 150,
                                 maxHeight: 150,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 30),
+                                  padding: const EdgeInsets.only(left: 35),
                                   child: getCategoriesWidget(context),
                                 ),
                               ),
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                           ];
                         },
                         body: Padding(
-                          padding: const EdgeInsets.only(left: 55),
+                          padding: const EdgeInsets.only(left: 45, right: 30),
                           child: getBody(context),
                         ),
                       ),
@@ -470,6 +471,7 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
+                  color: Color(0xff555f69),
                   fontFamily: "TimesBold"),
             ),
             GestureDetector(
@@ -484,7 +486,8 @@ class _HomePageState extends State<HomePage> {
                 child: TextLang(
                   Word.view_all,
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
+                      color: Color(0xff555f69),
                       fontWeight: FontWeight.normal,
                       fontFamily: "TimesBold"),
                 ),
@@ -506,6 +509,7 @@ class _HomePageState extends State<HomePage> {
           Word.ad,
           style: TextStyle(
               fontSize: 30,
+              color: Color(0xff555f69),
               fontWeight: FontWeight.bold,
               fontFamily: "TimesBold"),
         ),
@@ -522,6 +526,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    _animationController = new AnimationController(
+        vsync: this, duration: Duration(milliseconds: 400));
+    _runAnimation();
     super.initState();
     Provider.of<OrdersProvider>(widget.context, listen: false).init =
         DateTime.now();
@@ -658,6 +665,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onPayBillPressed(BuildContext context) {
+    print("Clicked the paybill");
     final tableProvider = Provider.of<OrdersProvider>(context, listen: false);
     final orderData = tableProvider.order;
     if (orderData.total > 0) {
@@ -671,14 +679,12 @@ class _HomePageState extends State<HomePage> {
     categoryProvider.selectedCategoryIndex = index;
   }
 
-  // AnimationController _animationController;
-
-  // void _runAnimation() async {
-  //   for (int i = 0; i < 3; i++) {
-  //     await _animationController.forward();
-  //     await _animationController.reverse();
-  //   }
-  // }
+  void _runAnimation() async {
+    for (int i = 0; i < 10; i++) {
+      await _animationController.forward();
+      await _animationController.reverse();
+    }
+  }
 
   Widget _getTopMenu(BuildContext context) {
     final notifications =
@@ -687,6 +693,8 @@ class _HomePageState extends State<HomePage> {
     Future.delayed(Duration(seconds: 25)).then((value) {
       newNitify = true;
     });
+
+    if (notifications > 0) _runAnimation();
 
     final drinksProvider =
         Provider.of<CategoryProvider>(context, listen: false);
@@ -712,19 +720,17 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         children: <Widget>[
           SizedBox(
-            width: 15,
+            width: 20,
           ),
           Consumer<CategoryProvider>(
             builder: (context, value, child) {
               return Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 35),
+                  padding: const EdgeInsets.only(left: 25),
                   child: Text(
                     categoryProvider.isPressedViewAllPromos == true
                         ? lang.w(Word.promotions)
-                        : ((value.selectedCategory == null &&
-                                categoryProvider.isPressedViewAllPromos ==
-                                    false)
+                        : ((value.selectedCategory == null)
                             ? lang.w(Word.categories)
                             : value.selectedCategory.title),
                     style: TextStyle(
@@ -737,8 +743,8 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-          FlatButton(
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               _showLanguage(context);
             },
             child: Row(
@@ -790,93 +796,74 @@ class _HomePageState extends State<HomePage> {
           ),
           FutureBuilder(
               future: Future.delayed(Duration(seconds: 25)),
-              builder: (c, s) =>
-                  s.connectionState == ConnectionState.done || newNitify
-                      ? GestureDetector(
-                          onTap: () {
-                            _showNotifications(context);
-                          },
-                          child: Container(
-                            height: 22,
-                            padding: const EdgeInsets.only(right: 60),
-                            child: Stack(
-                              children: <Widget>[
-                                Image.asset(
-                                  "assets/home_icons/ring.png",
-                                  height: 22,
-                                  width: 17.95,
-                                  color: notifications > 0
-                                      ? null
-                                      : ColorPalette.gray,
-                                ),
-                                // RotationTransition(
-                                //   turns: Tween(begin: 0.0, end: -.1)
-                                //       .chain(CurveTween(curve: Curves.elasticIn))
-                                //       .animate(_animationController),
-                                //   child: Icon(
-                                //     Icons.notifications_none,
-                                //     size: 28,
-                                //     color: notifications > 0
-                                //         ? Color(0xfffa456f)
-                                //         : ColorPalette.gray,
-                                //   ),
-                                // ),
-                                // Icon(
-                                //   Icons.notifications_none,
-                                //   size: 28,
-                                //   color: notifications > 0
-                                //       ? Color(0xfffa456f)
-                                //       : ColorPalette.gray,
-                                // ),
-                                if (notifications > 0)
-                                  Transform.translate(
-                                    offset: Offset(13, -10),
-                                    child: Container(
-                                      height: 16,
-                                      width: 16,
-                                      padding: EdgeInsets.only(top: 4),
-                                      decoration: BoxDecoration(
-                                          color: Color(0xfffa456f),
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.white,
-                                                offset: Offset(-0.5, 0.5),
-                                                blurRadius: 0,
-                                                spreadRadius: 2)
-                                          ]),
-                                      child: Text(
-                                        notifications.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 9,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ))
-                      : Container(
-                          height: 22,
-                          padding: const EdgeInsets.only(right: 60),
-                          child: Stack(
-                            children: <Widget>[
-                              Image.asset(
+              builder: (c, s) => s.connectionState == ConnectionState.done ||
+                      newNitify
+                  ? GestureDetector(
+                      onTap: () {
+                        _showNotifications(context);
+                      },
+                      child: Container(
+                        height: 22,
+                        padding: const EdgeInsets.only(right: 60),
+                        child: Stack(
+                          children: <Widget>[
+                            RotationTransition(
+                              turns: Tween(begin: 0.0, end: -.2)
+                                  .chain(CurveTween(curve: Curves.elasticIn))
+                                  .animate(_animationController),
+                              child: Image.asset(
                                 "assets/home_icons/ring.png",
                                 height: 22,
                                 width: 17.95,
-                                color: ColorPalette.gray,
+                                color: notifications > 0
+                                    ? null
+                                    : ColorPalette.gray,
                               ),
-                              // Icon(
-                              //   Icons.notifications_none,
-                              //   size: 28,
-                              //   color: Color(0xfffa456f),
-                              // ),
-                            ],
+                            ),
+                            if (notifications > 0)
+                              Transform.translate(
+                                offset: Offset(13, -10),
+                                child: Container(
+                                  height: 16,
+                                  width: 16,
+                                  padding: EdgeInsets.only(top: 4),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xfffa456f),
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.white,
+                                            offset: Offset(-0.5, 0.5),
+                                            blurRadius: 0,
+                                            spreadRadius: 2)
+                                      ]),
+                                  child: Text(
+                                    notifications.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w900),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ))
+                  : Container(
+                      height: 22,
+                      padding: const EdgeInsets.only(right: 60),
+                      child: Stack(
+                        children: <Widget>[
+                          Image.asset(
+                            "assets/home_icons/ring.png",
+                            height: 22,
+                            width: 17.95,
+                            color: ColorPalette.gray,
                           ),
-                        ))
+                        ],
+                      ),
+                    ))
         ],
       ),
     );

@@ -9,9 +9,9 @@ String en(Word word) {
     case Word.english:
       return "English";
     case Word.pay_the_bill:
-      return "Pay";
+      return "Pay\nthe bill";
     case Word.call_waiter:
-      return "Call waiter";
+      return "Call\nwaiter";
     case Word.logout:
       return "Logout";
     case Word.logout_warning:
@@ -127,7 +127,7 @@ String en(Word word) {
     case Word.promotions:
       return "Promotions";
     case Word.view_all:
-      return "View all";
+      return "See All";
     case Word.ad:
       return "Ad";
     case Word.empty_notifications:

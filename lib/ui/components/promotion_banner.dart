@@ -46,35 +46,53 @@ class _PromotionBannerState extends State<PromotionBanner> {
   List<Widget> getList() {
     return [
       Expanded(
-        child: Swiper(
-          key: widget.key,
-          itemCount: list1.length,
-          itemBuilder: (context, index) {
-            final promotion = list1[index];
-            return Container(
-              child: PromotionWidget(
-                withShadow: true,
-                index: index,
-                promotion: promotion,
-              ),
-            );
-          },
-          autoplay: true,
-          autoplayDelay: 10 * 1000,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black54,
+                spreadRadius: 0.0,
+                blurRadius: 20.0,
+                offset: Offset(5.0, 5.0),
+              )
+            ],
+          ),
+          child: Swiper(
+            key: widget.key,
+            itemCount: list1.length,
+            itemBuilder: (context, index) {
+              final promotion = list1[index];
+              return Container(
+                child: PromotionWidget(
+                  withShadow: true,
+                  index: index,
+                  promotion: promotion,
+                ),
+              );
+            },
+            autoplay: true,
+            autoplayDelay: 10 * 1000,
+          ),
         ),
       ),
       SizedBox(
         width: 30,
       ),
       Expanded(
-        child: Swiper(
-          itemCount: list2.length,
-          itemBuilder: (context, index) {
-            final promotion = list2[index];
-            return PromotionWidget(index: index, promotion: promotion);
-          },
-          autoplay: true,
-          autoplayDelay: 10 * 1000,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Swiper(
+            itemCount: list2.length,
+            itemBuilder: (context, index) {
+              final promotion = list2[index];
+              return PromotionWidget(index: index, promotion: promotion);
+            },
+            autoplay: true,
+            autoplayDelay: 10 * 1000,
+          ),
         ),
       ),
       SizedBox(

@@ -42,7 +42,7 @@ class _CategoryCardState extends State<CategoryCard> {
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.grey.withOpacity(0.8),
                 offset: Offset(5, 5),
                 spreadRadius: 0,
                 blurRadius: 20,

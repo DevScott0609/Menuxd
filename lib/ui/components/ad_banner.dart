@@ -39,34 +39,36 @@ class _AdBannerState extends State<AdBanner> {
 
   List<Widget> getList() {
     return [
-      SizedBox(
-        width: 425,
-        child: Swiper(
-          itemCount: list1.length,
-          itemBuilder: (context, index) {
-            final ad = list1[index];
-            return AdWidget(ad);
-          },
-          autoplay: true,
-          autoplayDelay: 10 * 1000,
+      Expanded(
+        child: SizedBox(
+          width: 425,
+          child: Swiper(
+            itemCount: list1.length,
+            itemBuilder: (context, index) {
+              final ad = list1[index];
+              return AdWidget(ad);
+            },
+            autoplay: true,
+            autoplayDelay: 10 * 1000,
+          ),
         ),
+      ),
+      SizedBox(
+        width: 30,
       ),
       Expanded(
         child: SizedBox(
-          width: 30,
-        ),
-      ),
-      SizedBox(
-        width: 425,
-        child: Swiper(
-          key: widget.key,
-          itemCount: list2.length,
-          itemBuilder: (context, index) {
-            final ad = list2[index];
-            return AdWidget(ad);
-          },
-          autoplay: true,
-          autoplayDelay: 10 * 1000,
+          width: 425,
+          child: Swiper(
+            key: widget.key,
+            itemCount: list2.length,
+            itemBuilder: (context, index) {
+              final ad = list2[index];
+              return AdWidget(ad);
+            },
+            autoplay: true,
+            autoplayDelay: 10 * 1000,
+          ),
         ),
       ),
       SizedBox(

@@ -24,9 +24,22 @@ class AdWidget extends StatelessWidget {
       child: Container(
         width: 430,
         height: 120,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.8),
+              offset: Offset(5, 5),
+              spreadRadius: 0,
+              blurRadius: 20,
+            )
+          ],
+        ),
         child: Card(
           elevation: 1,
           clipBehavior: Clip.hardEdge,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: CachedNetworkImage(
             imageUrl: ad.picture,
             placeholder: (context, url) =>

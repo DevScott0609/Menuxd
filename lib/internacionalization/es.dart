@@ -11,7 +11,7 @@ String es(Word word) {
     case Word.pay_the_bill:
       return "Pagar";
     case Word.call_waiter:
-      return "Llamar al mozo";
+      return "Llamar\nal mozo";
     case Word.logout:
       return "sair";
     case Word.logout_warning:

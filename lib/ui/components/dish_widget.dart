@@ -22,7 +22,7 @@ class DishWidget extends StatelessWidget {
         settings: MoneyFormatterSettings(
             thousandSeparator: ".", decimalSeparator: ","));
     final height = 298.87;
-    final width = 273.0;
+    final width = 285.0;
     final imageHeight = height * 0.65;
     return FadeInToUp(
       duration: Duration(milliseconds: 500),

@@ -22,6 +22,8 @@ class OrdersProvider extends ChangeNotifier {
   OrdersProvider();
   bool payed = false;
   DateTime init;
+  bool _isReceivedNotifications = false;
+
   get callingWaiter {
     return _callingWaiter;
   }
@@ -154,6 +156,13 @@ class OrdersProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  set isReceivedNotifications(bool value) {
+    _isReceivedNotifications = value;
+    notifyListeners();
+  }
+
+  bool get isReceivedNotifications => _isReceivedNotifications;
 }
 
 enum HomePopup { ORDERS, LANGUAGE, NOTIFICATIONS, ORDER_ADDED }

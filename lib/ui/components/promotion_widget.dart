@@ -33,10 +33,11 @@ class PromotionWidget extends StatelessWidget {
           httpHandler.sendPromotionClick(promotion);
         },
         child: Container(
-          width: 420,
+          // width: 420,
           padding: EdgeInsets.fromLTRB(20, 20, 20, withShadow ? 100 : 20),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
             image: DecorationImage(
                 image: NetworkImage(promotion.picture), fit: BoxFit.cover),
             gradient: LinearGradient(

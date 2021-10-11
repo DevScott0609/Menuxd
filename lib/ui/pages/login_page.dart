@@ -23,8 +23,9 @@ class _LoginPageState extends State<LoginPage> {
   FocusNode emailFocus;
   FocusNode passFocus;
 
-  final emailController = TextEditingController(text: 'Test@miservicioya2.com');
-  final passController = TextEditingController(text: 'Luis123456');
+  final emailController =
+      TextEditingController(text: 'publiciada@miservicioya2.com');
+  final passController = TextEditingController(text: 'Xd123456');
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool _loading = false;

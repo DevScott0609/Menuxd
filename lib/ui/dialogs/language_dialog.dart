@@ -39,7 +39,7 @@ class _LanguageDialogState extends State<LanguageDialog> {
                 height: 50,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 40),
+                padding: const EdgeInsets.only(left: 20),
                 child: Image.asset(
                   "assets/dialogs/triangle.png",
                   height: 8,

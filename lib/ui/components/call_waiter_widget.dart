@@ -37,7 +37,7 @@ class _CallWaiterWidgetState extends State<CallWaiterWidget> {
             padding: EdgeInsets.all(15),
             child: Image.asset(
               "assets/home_icons/call_waiter.png",
-              height: 35,
+              height: 33,
               color: tableProvider.callingWaiter ? null : Colors.grey[800],
             ),
           ),
